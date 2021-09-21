@@ -1,0 +1,1 @@
+<a title="Edit" class="btn btn-info btn-xs" href="{{ $edit_url }}"><i class="fas fa-pencil-alt"></i></a>
