@@ -87,7 +87,7 @@
             <a class="brand-link">
                 <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">SDN 1 CIMUNING</span>
+                <span class="brand-text font-weight-light">SDN CIMUNING 1</span>
             </a>
 
             <!-- Sidebar -->

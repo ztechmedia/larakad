@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
-                {{ Form::text('name', null, ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Contoh: (Andreas)']) }}
+                {{ Form::text('name', null, ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Contoh: (Andreas Simatubolong)']) }}
                 <div class="name-errors form-errors"></div>
             </div>
 

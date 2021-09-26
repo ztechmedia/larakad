@@ -23,10 +23,9 @@ class CreateSchedulesTable extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
-            $table->foreign('teacher_id')->references('id')->on('subjects')
+            $table->foreign('teacher_id')->references('id')->on('teachers')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-
 
             $table->foreign('class_id')->references('id')->on('classes')
                     ->onUpdate('cascade')

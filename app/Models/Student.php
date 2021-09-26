@@ -8,13 +8,15 @@ class Student extends Model
 {
     protected $guarded = ['id'];
 
+    //@kepunyaan user
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
+    //@kepunyaan level
     public function level()
     {
-        return $this->hasOne(Level::class);
+        return $this->belongsTo(Level::class);
     }
 }

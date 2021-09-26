@@ -1,4 +1,4 @@
-{{ Form::open(['data-url' => route('schedules.store'), 'data-response' => 'custom', 'method' => 'post', 'class' => 'ajax-create']) }}
+{{ Form::model($schedule, ['data-url' => route('schedules.update', $schedule->id), 'data-response' => 'custom', 'method' => 'put', 'class' => 'ajax-update']) }}
 
 <div class="modal-body">
     @include('admin.schedules._form')

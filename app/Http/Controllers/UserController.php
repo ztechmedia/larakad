@@ -102,7 +102,7 @@ class UserController extends Controller
     {
         if (Auth::user()->id == $id) {
             return response()->json([
-                'status' => 'error',
+                'status' => 'failed',
                 'status_code' => 400,
                 'message' => 'Tidak dapat menghapus diri sendiri',
             ]);

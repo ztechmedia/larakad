@@ -24,8 +24,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //@punya banyak student
     public function student(Type $var = null)
     {
         return $this->hasMany(Student::class);
+    }
+
+    //@punya banyak teacher
+    public function teacher(Type $var = null)
+    {
+        return $this->hasMany(Teacher::class);
     }
 }

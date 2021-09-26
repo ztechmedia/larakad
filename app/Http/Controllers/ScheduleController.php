@@ -30,13 +30,18 @@ class ScheduleController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'status_code' => 200,
             'classes' => $html
         ]);
     }
 
     public function list($class)
     {
-        $schedules = Schedule::where('class_id', $class)->get();
+        $schedules = Schedule::where('class_id', $class)
+                    ->with('subject')
+                    ->with('teacher')
+                    ->with('classes')
+                    ->get();
         return view('admin.schedules.schedule-list', ['schedules' => $schedules]);
     }
 
@@ -59,7 +64,7 @@ class ScheduleController extends Controller
         
         if($check) {
             return response()->json([
-                'status' => 'duplicate',
+                'status' => 'failed',
                 'message' => 'Jadwal sudah ada'
             ]);
         }
@@ -67,8 +72,60 @@ class ScheduleController extends Controller
         Schedule::create($request->all());
         return response()->json([
             'status' => 'success',
+            'status_code' => 200,
             'message' => 'Berhasil menambah jadwal'
         ]); 
+    }
+
+    public function destroy($id)
+    {
+        Schedule::destroy($id);
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => 'Jadwal berhasil dihapus'
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $schedule = Schedule::find($id);
+        return view('admin.schedules.edit', ['schedule' => $schedule]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validator($request);
+
+        $schedule = Schedule::where([
+            'subject_id' => $request->subject_id,
+            'teacher_id' => $request->teacher_id,
+            'class_id' => $request->class_id,
+            'day' => $request->day,
+            'start' => $request->start,
+            'end' => $request->end
+        ])->first();
+        
+        if($schedule && $schedule->id != $id) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Jadwal sudah ada'
+            ]);
+        }
+
+        $request->merge(['created_by' => Auth::user()->id]);
+
+        if($schedule) {
+            $schedule->update($request->all());
+        } else {
+            Schedule::where('id', $id)->first()->update($request->all());
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => 'Berhasil mengubah jadwal'
+        ]);
     }
 
     public function validator($request)

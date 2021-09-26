@@ -87,7 +87,7 @@ class LevelController extends Controller
     {
         if (Student::where('level_id', $id)->first()) {
             return response()->json([
-                'status' => 'error',
+                'status' => 'failed',
                 'status_code' => 400,
                 'message' => 'Tingkatan sekolah sudah digunakan oleh data siswa',
             ]);

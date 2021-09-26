@@ -58,7 +58,7 @@ class StudentController extends Controller
         $dataUser = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('12345678')
         ];
         $user = User::create($dataUser);
         $user->attachRole($role);

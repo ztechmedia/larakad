@@ -5,7 +5,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a>{{__('SDN')}} <b>{{ __('1') }}</b> {{ __('CIMUNING') }}</a>
+        <a>{{ SCHOOL_NAME }}</a>
     </div>
 
     <div class="card">

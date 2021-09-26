@@ -87,6 +87,7 @@
     }
 
     function loadSchedule(class_id) {
+        console.log(selectedClass);
         selectedClass = class_id;
         const url = setUrl("{{ route('schedules.list', ['class' => ':id']) }}", class_id);
         loadView(url, '.class-list');
@@ -97,12 +98,54 @@
         customModal('modal-default', 'Tambah Jadwal', url);
     }
 
+    function edit(id) {
+        const url = setUrl("{{ route('schedules.edit', ['schedule' => ':id']) }}", id);
+        customModal('modal-default', 'Edit Jadwal', url);
+    }
+
+    function destroy(id) {
+        const url = setUrl("{{ route('schedules.destroy', ['schedule' => ':id']) }}", id);
+        swal({
+                title: "Hapus",
+                text: "Yakin ingin menghapus jadwal tersebut ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ya, Hapus!",
+                closeOnConfirm: false
+            },
+            function () {
+                reqDelete(url, (err, res) => {
+                    if (res.status == 'success') {
+                        swal("Sukses", res.message, "success");
+                        loadSchedule(selectedClass);
+                    } else {
+                        console.log('Err:', err);
+                    }
+                });
+            }
+        );
+    }
+
     function ajaxResponse(context, res) {
-        if(res.status == 'success') {
-            swal("Sukses", res.message, "success");
-        } else {
+        if(res.status == 'failed') {
             swal('Ops', res.message, 'error');
+        } else {
+            swal("Sukses", res.message, "success");
+            loadSchedule(selectedClass);
+            if(res.update) $("#modal-default").modal('hide');
         }
     }
 </script>
+@endsection
+
+@section('css')
+    <style>
+        .sch-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 @endsection

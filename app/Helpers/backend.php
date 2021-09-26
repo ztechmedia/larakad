@@ -1,6 +1,6 @@
 <?php
 
-define('SCHOOL_NAME', 'SDN 1 CIMUNING');
+define('SCHOOL_NAME', 'SDN CIMUNING 1');
 
 function revDate($date) {
     $explode = explode('-', $date);
