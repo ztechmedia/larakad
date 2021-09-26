@@ -1,15 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
- */
 define('SCHOOL_NAME', 'SDN 1 CIMUNING');
 
 function setTitle($text) {
@@ -32,12 +22,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('students', 'StudentController', ['except' => ['show']]);
     Route::resource('levels', 'LevelController', ['except' => ['show']]);
     
+    Route::resource('classes', 'ClassController', ['except' => ['show', 'create']]);
     Route::get('classes/class-list/{level}', ['as' => 'classes.list', 'uses' => 'ClassController@classList']);
     Route::get('classes/create/{level}', ['as' => 'classes.create', 'uses' => 'ClassController@create']);
-    Route::resource('classes', 'ClassController', ['except' => ['show', 'create']]);
-
+    
     Route::resource('subjects', 'SubjectController', ['except' => ['show']]);
-
-    Route::resource('schedules', 'ScheduleController', ['except' => ['show']]);
-    Route::get('schedules/class-list/{level}', ['as' => 'schedules.classlist', 'uses' => 'ScheduleController@classList']);
+    
+    Route::resource('schedules', 'ScheduleController', ['except' => ['show', 'create']]);
+    Route::get('schedules/class/{level}', ['as' => 'schedules.classes', 'uses' => 'ScheduleController@classes']);
+    Route::get('schedules/list/{class}', ['as' => 'schedules.list', 'uses' => 'ScheduleController@list']);
+    Route::get('schedules/create/{class}', ['as' => 'schedules.create', 'uses' => 'ScheduleController@create']);
 });

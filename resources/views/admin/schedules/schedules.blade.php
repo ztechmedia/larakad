@@ -76,7 +76,7 @@
         selectedLevel = level;
         $('#class_id').empty();
         $('#class_id').append("<option value=''>- Pilih Kelas -</option>");
-        const url = setUrl("{{ route('schedules.classlist', ['level' => ':id']) }}", level);
+        const url = setUrl("{{ route('schedules.classes', ['level' => ':id']) }}", level);
         reqJson(url, 'GET', {}, (err, res) => {
             if(!err) {
                 if(res.status === 'success') {
@@ -88,6 +88,16 @@
 
     function loadSchedule(class_id) {
         selectedClass = class_id;
+        const url = setUrl("{{ route('schedules.list', ['class' => ':id']) }}", class_id);
+        loadView(url, '.class-list');
+    }
+
+    function newSchedule() {
+        const url = setUrl("{{ route('schedules.create', ['class' => ':id']) }}", selectedClass);
+        customModal('modal-default', 'Tambah Jadwal', url);
+    }
+
+    function ajaxResponse() {
         
     }
 </script>

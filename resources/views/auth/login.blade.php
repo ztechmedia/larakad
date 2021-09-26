@@ -25,7 +25,7 @@
 
             <div class="input-group mb-3">
 
-                {{ Form::email('email', null, 
+                {{ Form::email('email', 'admin@gmail.com', 
                     ['class' => $errors->has('email') 
                         ? 'form-control is-invalid' 
                         : 'form-control', 'placeholder' => 'Email']) }}
