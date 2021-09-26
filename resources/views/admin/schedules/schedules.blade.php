@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('pageTitle', setTitle('Jadwal Mata Pelajaranphp '))
+@section('pageTitle', setTitle('Jadwal Mata Pelajaran'))
 
 @section('content')
 <div class="content-header">
@@ -97,8 +97,12 @@
         customModal('modal-default', 'Tambah Jadwal', url);
     }
 
-    function ajaxResponse() {
-        
+    function ajaxResponse(context, res) {
+        if(res.status == 'success') {
+            swal("Sukses", res.message, "success");
+        } else {
+            swal('Ops', res.message, 'error');
+        }
     }
 </script>
 @endsection

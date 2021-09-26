@@ -11,6 +11,7 @@ class CreateSchedulesTable extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('subject_id')->unsigned();
+            $table->bigInteger('teacher_id')->unsigned();
             $table->bigInteger('class_id')->unsigned();
             $table->string('day', 10);
             $table->string('start', 10);
@@ -21,6 +22,11 @@ class CreateSchedulesTable extends Migration
             $table->foreign('subject_id')->references('id')->on('subjects')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
+
+            $table->foreign('teacher_id')->references('id')->on('subjects')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
 
             $table->foreign('class_id')->references('id')->on('classes')
                     ->onUpdate('cascade')

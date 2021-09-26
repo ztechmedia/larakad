@@ -20,12 +20,22 @@
     }
 @endphp
 
+<input type="hidden" id="class_id" name="class_id" value="<?= $class_id ?>" />
+
 <div class="form-group">
     <label for="subject_id">Mata Pelajaran</label>
     {{ Form::select('subject_id', ['' => '-Pilih Mata Pelajaran-']+App\Models\Subject::pluck('name', 'id')->all(), 
         null, ['id' => 'subject_id', 'class' => 'form-control']) }}
     <div class="name-errors form-errors"></div>
 </div>
+
+<div class="form-group">
+    <label for="teacher_id">Guru</label>
+    {{ Form::select('teacher_id', ['' => '-Pilih Guru-']+App\Models\Teacher::pluck('name', 'id')->all(), 
+        null, ['id' => 'teacher_id', 'class' => 'form-control']) }}
+    <div class="name-errors form-errors"></div>
+</div>
+
 
 <div class="form-group">
     <label for="day">Hari</label>

@@ -173,12 +173,11 @@ class ClassController extends Controller
         return Validator::make($request->all(), [
             'name' => 'required',
             'subclass' => 'required|max:2',
-        ])
-            ->setAttributeNames(
-                [
-                    'name' => 'tingkatan kelas',
-                    'subclass' => 'kelompok kelas',
-                ]
-            )->validate();
+        ])->setAttributeNames(
+            [
+                'name' => 'tingkatan kelas',
+                'subclass' => 'kelompok kelas',
+            ]
+        )->validate();
     }
 }

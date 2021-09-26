@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ClassData;
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class ScheduleController extends Controller
 {
@@ -45,6 +47,48 @@ class ScheduleController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->day);
+        $this->validator($request);
+        $check = Schedule::where([
+            'subject_id' => $request->subject_id,
+            'teacher_id' => $request->teacher_id,
+            'class_id' => $request->class_id,
+            'day' => $request->day,
+            'start' => $request->start,
+            'end' => $request->end
+        ])->first();
+        
+        if($check) {
+            return response()->json([
+                'status' => 'duplicate',
+                'message' => 'Jadwal sudah ada'
+            ]);
+        }
+        $request->merge(['created_by' => Auth::user()->id]);
+        Schedule::create($request->all());
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil menambah jadwal'
+        ]); 
+    }
+
+    public function validator($request)
+    {
+        return Validator::make($request->all(), [
+            'subject_id' => 'required',
+            'teacher_id' => 'required',
+            'class_id' => 'required',
+            'day' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+        ])->setAttributeNames(
+            [
+                'subject_id' => 'mata pelajaran',
+                'teacher_id' => 'guru',
+                'class_id' => 'kelas',
+                'day' => 'hari',
+                'start' => 'waktu mulai',
+                'end' => 'waktu berakhir',
+            ]
+        )->validate();
     }
 }
