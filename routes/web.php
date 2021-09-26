@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+define('SCHOOL_NAME', 'SDN 1 CIMUNING');
+
+function setTitle($text) {
+    return SCHOOL_NAME . ' | ' . $text;
+}
+
 Route::get('/logout', '/Auth/LoginController@logout');
 Auth::routes(['register' => false]);
 
