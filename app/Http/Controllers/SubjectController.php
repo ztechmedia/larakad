@@ -93,7 +93,7 @@ class SubjectController extends Controller
 
     public function validator($request, $id = null)
     {
-        $name = $id ? 'required|unique:subjects,name,' . $id : 'required|unique:subjects';
+        $name = $id ? 'required|max:30|unique:subjects,name,' . $id : 'required|max:30|unique:subjects';
 
         $validatorData = [
             'name' => $name,

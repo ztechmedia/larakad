@@ -103,10 +103,10 @@ class LevelController extends Controller
 
     public function validator($request, $id = null)
     {
-        $stand_for = $id ? 'required|unique:levels,stand_for,' . $id : 'required|unique:levels';
+        $stand_for = $id ? 'required|max:10|unique:levels,stand_for,' . $id : 'required|max:10|unique:levels';
 
         $validatorData = [
-            'name' => 'required',
+            'name' => 'required|max:30',
             'stand_for' => $stand_for,
         ];
 

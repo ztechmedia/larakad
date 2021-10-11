@@ -118,10 +118,10 @@ class UserController extends Controller
 
     public function validator($request, $id = null)
     {
-        $email = $id ? 'required|email|unique:users,email,' . $id : 'required|email|unique:users';
+        $email = $id ? 'required|max:100|email|unique:users,email,' . $id : 'required|max:100|email|unique:users';
 
         $validatorData = [
-            'name' => 'required',
+            'name' => 'required|max:30',
             'email' => $email,
         ];
 

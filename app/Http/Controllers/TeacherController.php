@@ -112,10 +112,10 @@ class TeacherController extends Controller
 
         $validatorData = [
             'nip' => $nip,
-            'name' => 'required',
+            'name' => 'required|max:30',
             'address' => 'required',
-            'mobile' => 'required',
-            'last_education' => 'required',
+            'mobile' => 'required|max:15',
+            'last_education' => 'required|max:100',
         ];
 
         if (!$id) {

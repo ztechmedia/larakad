@@ -171,7 +171,7 @@ class ClassController extends Controller
     public function validator($request, $id = null)
     {
         return Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|max:30',
             'subclass' => 'required|max:2',
         ])->setAttributeNames(
             [

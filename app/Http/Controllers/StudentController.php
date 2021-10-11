@@ -121,25 +121,25 @@ class StudentController extends Controller
 
     public function validator($request, $id = null)
     {
-        $nis = $id ? 'required|unique:students,nis,' . $id : 'required|unique:students';
-        $nisn = $id ? 'required|unique:students,nisn,' . $id : 'required|unique:students';
+        $nis = $id ? 'required|max:15|unique:students,nis,' . $id : 'required|max:15|unique:students';
+        $nisn = $id ? 'required|max:15|unique:students,nisn,' . $id : 'required|max:15|unique:students';
 
         $validatorData = [
             'nis' => $nis,
             'nisn' => $nisn,
-            'name' => 'required',
-            'birth_place' => 'required',
+            'name' => 'required|max:30',
+            'birth_place' => 'required|max:50',
             'birth_date' => 'required',
-            'status' => 'required',
-            'child_position' => 'required',
+            'status' => 'required|max:20',
+            'child_position' => 'required|max:2',
             'address' => 'required',
             'parent_address' => 'required',
             'join_date' => 'required',
-            'father_name' => 'required',
-            'mother_name' => 'required',
-            'parent_mobile' => 'required',
-            'father_job' => 'required',
-            'mother_job' => 'required',
+            'father_name' => 'required|max:30',
+            'mother_name' => 'required|max:30',
+            'parent_mobile' => 'required|max:15',
+            'father_job' => 'required|max:50',
+            'mother_job' => 'required|max:50',
             'level_id' => 'required'
         ];
 
