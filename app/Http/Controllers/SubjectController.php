@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Datatables;
+use Auth;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -48,6 +49,7 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $data = $this->validator($request);
+        $data['created_by'] = Auth::user()->name;
         $subject = Subject::create($data);
 
         return response()->json([

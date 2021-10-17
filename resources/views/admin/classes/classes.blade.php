@@ -87,7 +87,7 @@
             setTimeout(() => {
                 $(`#card-${res.class}`).attr('style', 'display:block');
             }, 1000);
-
+            context.reset();
             if(res.update) $("#modal-default").modal('hide');
         }
     }

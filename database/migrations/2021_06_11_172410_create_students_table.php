@@ -37,6 +37,7 @@ class CreateStudentsTable extends Migration
             $table->string('parent_mobile', 15);
             $table->string('father_job', 50);
             $table->string('mother_job', 50);
+            $table->string('created_by', 30);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')

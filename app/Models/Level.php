@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Level extends Model
 {
-    protected $fillable = ['name', 'stand_for'];
+    protected $fillable = ['name', 'stand_for', 'created_by'];
 
     //@punya banyak student
     public function student()

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    protected $fillable = ['user_id', 'nip', 'name', 'address', 'mobile', 'gender', 'last_education'];
+    protected $fillable = ['user_id', 'nip', 'name', 'address', 'mobile', 'gender', 'last_education', 'created_by'];
 
     //@kepunyaan user
     public function user()

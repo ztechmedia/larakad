@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClassData extends Model
 {
     protected $table = 'classes';
-    protected $fillable = ['name', 'level_id'];
+    protected $fillable = ['name', 'level_id', 'created_by'];
 
     //@kepunyaan level
     public function level()
@@ -26,5 +26,11 @@ class ClassData extends Model
         return 0 === static::where('id', '!=', $id)
             ->where('level_id', $level_id)
             ->where('name', $name)->count();
+    }
+
+    //@kepunyaan mapping
+    public function mapping()
+    {
+        return $this->hasMany(MappingClass::class);
     }
 }

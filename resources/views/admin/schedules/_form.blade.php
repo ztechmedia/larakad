@@ -22,6 +22,8 @@
 
 {{ Form::text('class_id', isset($class_id) ? $class_id : null, ['id' => 'class_id', 'class' => 'form-control', 'style' => 'display:none']) }}
 
+<input type="text" value="{{ $year }}" id="year" name="year" style="display:none">
+
 <div class="form-group">
     <label for="subject_id">Mata Pelajaran</label>
     {{ Form::select('subject_id', ['' => '-Pilih Mata Pelajaran-']+App\Models\Subject::pluck('name', 'id')->all(), 

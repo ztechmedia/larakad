@@ -202,6 +202,15 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ route('classes.mapping') }}" class="nav-link {{ setMenu($menu, 'class_mapping') }}">
+                                <i class="nav-icon fas fa-sitemap"></i>
+                                <p>
+                                    Pemetaan Kelas
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ route('subjects.index') }}" class="nav-link {{ setMenu($menu, 'subject') }}">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
@@ -210,12 +219,20 @@
                             </a>
                         </li>
 
-
                         <li class="nav-item">
                             <a href="{{ route('schedules.index') }}" class="nav-link {{ setMenu($menu, 'schedule') }}">
                                 <i class="nav-icon fas fa-calendar"></i>
                                 <p>
                                     Jadwal
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('student_values') }}" class="nav-link {{ setMenu($menu, 'student_values') }}">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Nilai Siswa
                                 </p>
                             </a>
                         </li>

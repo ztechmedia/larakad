@@ -35,9 +35,9 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function list($class)
+    public function list($class, $year)
     {
-        $schedules = Schedule::where('class_id', $class)
+        $schedules = Schedule::where(['class_id' =>  $class, 'year' => $year])
                     ->with('subject')
                     ->with('teacher')
                     ->with('classes')
@@ -45,9 +45,9 @@ class ScheduleController extends Controller
         return view('admin.schedules.schedule-list', ['schedules' => $schedules]);
     }
 
-    public function create($class)
+    public function create($class, $year)
     {
-        return view('admin.schedules.create', ['class_id' => $class]);
+        return view('admin.schedules.create', ['class_id' => $class, 'year' => $year]);
     }
 
     public function store(Request $request)
@@ -59,8 +59,19 @@ class ScheduleController extends Controller
             'class_id' => $request->class_id,
             'day' => $request->day,
             'start' => $request->start,
-            'end' => $request->end
+            'end' => $request->end,
+            'year' => $request->year
         ])->first();
+
+        $start = explode(':', $request->start);
+        $end = explode(':', $request->end);
+
+        if($end <= $start) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Waktu Berakhir harus lebih besar dari Waktu Mulai'
+            ]);
+        }
         
         if($check) {
             return response()->json([
@@ -103,8 +114,19 @@ class ScheduleController extends Controller
             'class_id' => $request->class_id,
             'day' => $request->day,
             'start' => $request->start,
-            'end' => $request->end
+            'end' => $request->end,
+            'year' => $request->year
         ])->first();
+
+        $start = explode(':', $request->start);
+        $end = explode(':', $request->end);
+
+        if($end <= $start) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Waktu Berakhir harus lebih besar dari Waktu Mulai'
+            ]);
+        }
         
         if($schedule && $schedule->id != $id) {
             return response()->json([
@@ -137,6 +159,7 @@ class ScheduleController extends Controller
             'day' => 'required',
             'start' => 'required',
             'end' => 'required',
+            'year' => 'required',
         ])->setAttributeNames(
             [
                 'subject_id' => 'mata pelajaran',
@@ -145,6 +168,7 @@ class ScheduleController extends Controller
                 'day' => 'hari',
                 'start' => 'waktu mulai',
                 'end' => 'waktu berakhir',
+                'year' => 'required',
             ]
         )->validate();
     }

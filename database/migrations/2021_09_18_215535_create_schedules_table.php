@@ -16,6 +16,7 @@ class CreateSchedulesTable extends Migration
             $table->string('day', 10);
             $table->string('start', 10);
             $table->string('end', 10);
+            $table->string('year', 10);
             $table->bigInteger('created_by')->unsigned();
             $table->timestamps();
 

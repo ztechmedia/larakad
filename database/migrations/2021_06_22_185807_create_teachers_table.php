@@ -22,6 +22,7 @@ class CreateTeachersTable extends Migration
             $table->text('address');
             $table->string('mobile', 15);
             $table->string('last_education', 100);
+            $table->string('created_by', 30);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')

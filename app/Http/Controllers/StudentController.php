@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Datatables;
+use Auth;
 use App\Models\Role;
 use App\Models\Student;
 use App\Models\User;
@@ -67,6 +68,7 @@ class StudentController extends Controller
         $data['birth_date'] = revDate($data['birth_date']);
         $data['join_date'] = revDate($data['join_date']);
         $data['user_id'] = $user->id;
+        $data['created_by'] = Auth::user()->name;
         $student = Student::create($data);
 
         return response()->json([

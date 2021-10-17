@@ -1,13 +1,13 @@
 @extends('layouts.admin.app')
 
-@section('pageTitle', setTitle('Jadwal Mata Pelajaran'))
+@section('pageTitle', setTitle('Nilai Siswa'))
 
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Jadwal Mata Pelajaran</h1>
+                <h1 class="m-0">Nilai Siswa</h1>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
 
                                 <div class="form-group">
                                     <label for="level_id">Tahun Ajaran</label>
-                                    <select class="form-control" id="year" name="year" onchange="loadSchedule($('#class_id').val())">
+                                    <select class="form-control" id="year" name="year">
                                         @php
                                         for ($i=2018; $i <= date('Y'); $i++) { $y=$i.'-'.($i + 1);
                                             echo "<option value='$y'>$y</option>" ; } 
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="card-header">
-                        <h3 class="card-title">Daftar Mata Pelajaran</h3>
+                        <h3 class="card-title">Daftar Siswa</h3>
                     </div>
 
                     <div class="card-body">
@@ -63,6 +63,7 @@
                             Silahkan pilih Kelas yang tersedia
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -77,7 +78,8 @@
 @section('scripts')
 <script src="{{ asset('js/errorHandler.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>
-<script type="text/javascript">
+
+<script>
     let selectedLevel = null;
     let selectedClass = null;
 
@@ -94,69 +96,13 @@
             }
         });
     }
-
-    function loadSchedule(class_id) {
-        selectedClass = class_id;
-        let year = $("#year").val();
-        const url = `{{ url('admin/schedules/list/${class_id}/${year}') }}`;
-        loadView(url, '.class-list');
-    }
-
-    function newSchedule() {
-        let year = $("#year").val();
-        const url = `{{ url('admin/schedules/create/${selectedClass}/${year}') }}`;
-        customModal('modal-default', 'Tambah Jadwal', url);
-    }
-
-    function edit(id) {
-        const url = setUrl("{{ route('schedules.edit', ['schedule' => ':id']) }}", id);
-        customModal('modal-default', 'Edit Jadwal', url);
-    }
-
-    function destroy(id) {
-        const url = setUrl("{{ route('schedules.destroy', ['schedule' => ':id']) }}", id);
-        swal({
-                title: "Hapus",
-                text: "Yakin ingin menghapus jadwal tersebut ?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Ya, Hapus!",
-                closeOnConfirm: false
-            },
-            function () {
-                reqDelete(url, (err, res) => {
-                    if (res.status == 'success') {
-                        swal("Sukses", res.message, "success");
-                        loadSchedule(selectedClass);
-                    } else {
-                        console.log('Err:', err);
-                    }
-                });
-            }
-        );
-    }
-
-    function ajaxResponse(context, res) {
-        if(res.status == 'failed') {
-            swal('Ops', res.message, 'error');
-        } else {
-            swal("Sukses", res.message, "success");
-            loadSchedule(selectedClass);
-            context.reset();
-            if(res.update) $("#modal-default").modal('hide');
-        }
-    }
 </script>
 @endsection
 
 @section('css')
-    <style>
-        .sch-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
-    </style>
+<style>
+    .custom-table tr td{
+        padding: 5px;
+    }
+</style>
 @endsection

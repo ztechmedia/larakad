@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Datatables;
+use Auth;
 use App\Models\Level;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $data = $this->validator($request);
+        $data['created_by'] = Auth::user()->name;
         $level = Level::create($data);
         return response()->json([
             'status' => 'success',

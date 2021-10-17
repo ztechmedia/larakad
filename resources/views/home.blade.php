@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('pageTitle', 'Arkan Islamic School | Admin Panel')
+@section('pageTitle', setTitle('Beranda'))
 
 @section('content')
 <div class="content-header">

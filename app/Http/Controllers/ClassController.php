@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\ClassData;
+use App\Models\MappingClass;
 use App\Models\Level;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,7 +69,8 @@ class ClassController extends Controller
 
         $data = [
             'name' => $name,
-            'level_id' => $request->level_id
+            'level_id' => $request->level_id,
+            'created_by' => Auth::user()->name
         ];
 
         $class = ClassData::create($data);
@@ -166,6 +170,70 @@ class ClassController extends Controller
         }
 
         return $classes;
+    }
+
+    public function mapping()
+    {
+        return view('admin.classes.mapping.mapping', ['menu' => 'class_mapping']);
+    }
+
+    public function mappingStudent($classId, $year)
+    {
+        $mappedStudents = MappingClass::where(['class_id' => $classId, 'year' => $year])->get();
+        $ids = [];
+        foreach ($mappedStudents as $student) {
+            array_push($ids, $student->student_id);
+        }
+        if(count($ids) > 0) {
+            $students = Student::whereNotIn('id', $ids)->get();
+        } else {
+            $students = Student::all();
+        }
+        
+        return view('admin.classes.mapping.student-list', ['students' => $students]);
+    }
+
+    public function mappingRegisteredStudent($classId, $year)
+    {
+        $mappedStudents = MappingClass::where(['class_id' => $classId, 'year' => $year])->get();
+        $ids = [];
+        foreach ($mappedStudents as $student) {
+            array_push($ids, $student->student_id);
+        }
+        if(count($ids) > 0) {
+            $students = Student::whereIn('id', $ids)->get();
+        } else {
+            $students = null;
+        }
+        
+        return view('admin.classes.mapping.student-registered-list', ['students' => $students]);
+    }
+
+    public function addStudentToMapClass(Request $request)
+    {
+        $data = [
+            'class_id' => $request->classId,
+            'year' => $request->year,
+            'student_id' => $request->studentId,
+            'created_by' => Auth::user()->name
+        ];
+        MappingClass::create($data);
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => 'Murid berhasil ditambahkan'
+        ]);
+    }
+
+    public function mappingRemoveStudent($studentId, $classId, $year)
+    {
+        $student = MappingClass::where(['student_id' => $studentId, 'class_id' => $classId, 'year' => $year]);
+        $student->delete();
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => 'Murid berhasil dihapus dari kelas'
+        ]);
     }
 
     public function validator($request, $id = null)

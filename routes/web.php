@@ -19,11 +19,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('classes', 'ClassController', ['except' => ['show', 'create']]);
     Route::get('classes/class-list/{level}', ['as' => 'classes.list', 'uses' => 'ClassController@classList']);
     Route::get('classes/create/{level}', ['as' => 'classes.create', 'uses' => 'ClassController@create']);
+    Route::get('classes/mapping', ['as' => 'classes.mapping', 'uses' => 'ClassController@mapping']);
+    Route::get('classes/mapping_student/{class}/{year}', ['as' => 'classes.mapping_student', 'uses' => 'ClassController@mappingStudent']);
+    Route::get('classes/mapping_registered_student/{class}/{year}', ['as' => 'classes.mapping_registered_student', 'uses' => 'ClassController@mappingRegisteredStudent']);
+    Route::delete('classes/mapping_remove_student/{student}/{class}/{year}', ['as' => 'classes.mapping_remove_student', 'uses' => 'ClassController@mappingRemoveStudent']);
+    Route::post('classes/add_student', ['as' => 'classes.add_student', 'uses' => 'ClassController@addStudentToMapClass']);
     
     Route::resource('subjects', 'SubjectController', ['except' => ['show']]);
     
     Route::resource('schedules', 'ScheduleController', ['except' => ['show', 'create']]);
     Route::get('schedules/class/{level}', ['as' => 'schedules.classes', 'uses' => 'ScheduleController@classes']);
-    Route::get('schedules/list/{class}', ['as' => 'schedules.list', 'uses' => 'ScheduleController@list']);
-    Route::get('schedules/create/{class}', ['as' => 'schedules.create', 'uses' => 'ScheduleController@create']);
+    Route::get('schedules/list/{class}/{year}', ['as' => 'schedules.list', 'uses' => 'ScheduleController@list']);
+    Route::get('schedules/create/{class}/{year}', ['as' => 'schedules.create', 'uses' => 'ScheduleController@create']);
+
+    Route::get('student_values', ['as' => 'student_values', 'uses' => 'StudentValuesController@index']);
 });

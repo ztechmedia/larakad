@@ -29,13 +29,6 @@ class UsersTableSeeder extends Seeder
         $studentRole->save();
 
         $admin = new User();
-        $admin->name = 'Arman Septian';
-        $admin->email = 'septian.arman009@gmail.com';
-        $admin->password = bcrypt('janxploit');
-        $admin->save();
-        $admin->attachRole($adminRole);
-
-        $admin = new User();
         $admin->name = 'Admin';
         $admin->email = 'admin@gmail.com';
         $admin->password = bcrypt('janxploit');

@@ -19,4 +19,10 @@ class Student extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    //@kepunyaan mapping
+    public function mapping()
+    {
+        return $this->hasMany(MappingClass::class);
+    }
 }

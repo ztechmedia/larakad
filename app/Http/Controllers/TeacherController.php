@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Datatables;
+use Auth;
 use App\Models\Role;
 use App\Models\Teacher;
 use App\Models\User;
@@ -61,6 +62,7 @@ class TeacherController extends Controller
         $user->attachRole($role);
         $data = $request->except('email');
         $data['user_id'] = $user->id;
+        $data['created_by'] = Auth::user()->name;
         $teacher = Teacher::create($data);
 
         return response()->json([

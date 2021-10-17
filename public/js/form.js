@@ -14,7 +14,6 @@ $(document.body).on("submit", ".ajax-create", function(e) {
         if (res) {
             if (!err) {
                 if (resStatus) {
-                    this.reset();
                     ajaxResponse(this, res);
                 } else {
                     swal("Sukses", res.message, "success");
