@@ -182,6 +182,7 @@ return [
         Laratrust\LaratrustServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Yajra\DataTables\HtmlServiceProvider::class,
+        Mavinoo\Batch\BatchServiceProvider::class,
     ],
 
     /*
@@ -240,6 +241,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Laratrust' => Laratrust\LaratrustFacade::class,
         'Datatables' => Yajra\DataTables\Facades\DataTables::class,
+        'Batch' => Mavinoo\Batch\BatchFacade::class,
     ],
 
 ];

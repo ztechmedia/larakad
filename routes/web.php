@@ -29,8 +29,11 @@ Route::group(['prefix' => 'admin'], function () {
     
     Route::resource('schedules', 'ScheduleController', ['except' => ['show', 'create']]);
     Route::get('schedules/class/{level}', ['as' => 'schedules.classes', 'uses' => 'ScheduleController@classes']);
-    Route::get('schedules/list/{class}/{year}', ['as' => 'schedules.list', 'uses' => 'ScheduleController@list']);
-    Route::get('schedules/create/{class}/{year}', ['as' => 'schedules.create', 'uses' => 'ScheduleController@create']);
+    Route::get('schedules/list/{class}/{year}/{semester}', ['as' => 'schedules.list', 'uses' => 'ScheduleController@list']);
+    Route::get('schedules/create/{class}/{year}/{semester}', ['as' => 'schedules.create', 'uses' => 'ScheduleController@create']);
 
     Route::get('student_values', ['as' => 'student_values', 'uses' => 'StudentValuesController@index']);
+    Route::get('student_values/student_list/{class}/{year}', ['as' => 'student_values.student_list', 'uses' => 'StudentValuesController@studentList']);
+    Route::get('student_values/input_values/{student}/{class}/{year}/{semester}/{mode}', ['as' => 'student_values.input_values', 'uses' => 'StudentValuesController@inputValues']);
+    Route::post('student_values/store', ['as' => 'student_values.store', 'uses' => 'StudentValuesController@storeValues']);
 });

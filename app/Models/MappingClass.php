@@ -17,7 +17,7 @@ class MappingClass extends Model
     //@kepunyaan classes
     public function classes()
     {
-        return $this->belongsTo(CalssData::class);
+        return $this->belongsTo(ClassData::class);
     }
     
 }

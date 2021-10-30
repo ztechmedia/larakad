@@ -35,9 +35,9 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function list($class, $year)
+    public function list($class, $year, $semester)
     {
-        $schedules = Schedule::where(['class_id' =>  $class, 'year' => $year])
+        $schedules = Schedule::where(['class_id' =>  $class, 'year' => $year, 'semester' => $semester])
                     ->with('subject')
                     ->with('teacher')
                     ->with('classes')
@@ -45,9 +45,9 @@ class ScheduleController extends Controller
         return view('admin.schedules.schedule-list', ['schedules' => $schedules]);
     }
 
-    public function create($class, $year)
+    public function create($class, $year, $semester)
     {
-        return view('admin.schedules.create', ['class_id' => $class, 'year' => $year]);
+        return view('admin.schedules.create', ['class_id' => $class, 'year' => $year, 'semester' => $semester]);
     }
 
     public function store(Request $request)
@@ -60,6 +60,7 @@ class ScheduleController extends Controller
             'day' => $request->day,
             'start' => $request->start,
             'end' => $request->end,
+            'semester' => $request->semester,
             'year' => $request->year
         ])->first();
 
@@ -115,6 +116,7 @@ class ScheduleController extends Controller
             'day' => $request->day,
             'start' => $request->start,
             'end' => $request->end,
+            'semester' => $request->semester,
             'year' => $request->year
         ])->first();
 
@@ -159,6 +161,7 @@ class ScheduleController extends Controller
             'day' => 'required',
             'start' => 'required',
             'end' => 'required',
+            'semester' => 'required',
             'year' => 'required',
         ])->setAttributeNames(
             [
@@ -168,7 +171,8 @@ class ScheduleController extends Controller
                 'day' => 'hari',
                 'start' => 'waktu mulai',
                 'end' => 'waktu berakhir',
-                'year' => 'required',
+                'semester' => 'semester',
+                'year' => 'tahun',
             ]
         )->validate();
     }

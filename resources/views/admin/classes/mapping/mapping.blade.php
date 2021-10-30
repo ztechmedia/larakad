@@ -74,6 +74,7 @@
                         </div>
                     </div>
 
+                    @if(Auth::user()->hasRole('admin'))
                     <div class="card-header">
                         <h3 class="card-title">Daftar Siswa</h3>
                     </div>
@@ -83,6 +84,8 @@
                             Silahkan pilih tingkatan sekolah & level
                         </div>
                     </div>
+                    @endif
+                    
                 </div>
             </div>
         </div>

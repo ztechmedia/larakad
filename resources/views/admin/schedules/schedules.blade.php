@@ -50,6 +50,14 @@
                                         @endphp 
                                     </select> 
                                 </div> 
+
+                                <div class="form-group">
+                                    <label for="level_id">Semester</label>
+                                    <select class="form-control" id="semester" name="semester" onchange="loadSchedule($('#class_id').val())">
+                                       <option value="SM1">Semester 1</option>
+                                       <option value="SM2">Semester 2</option>
+                                    </select> 
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -98,13 +106,15 @@
     function loadSchedule(class_id) {
         selectedClass = class_id;
         let year = $("#year").val();
-        const url = `{{ url('admin/schedules/list/${class_id}/${year}') }}`;
+        let semester = $("#semester").val();
+        const url = `{{ url('admin/schedules/list/${class_id}/${year}/${semester}') }}`;
         loadView(url, '.class-list');
     }
 
     function newSchedule() {
         let year = $("#year").val();
-        const url = `{{ url('admin/schedules/create/${selectedClass}/${year}') }}`;
+        let semester = $("#semester").val();
+        const url = `{{ url('admin/schedules/create/${selectedClass}/${year}/${semester}') }}`;
         customModal('modal-default', 'Tambah Jadwal', url);
     }
 

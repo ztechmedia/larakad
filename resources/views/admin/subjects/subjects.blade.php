@@ -30,9 +30,10 @@
                     </div>
 
                     <div class="card-body">
-
+                        @if(Auth::user()->hasRole('admin'))
                         <a class="btn btn-primary mb-2" href="{{ $add }}">Tambah Mata Pelajaran</a>
-
+                        @endif
+                        
                         <table id="mapel" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

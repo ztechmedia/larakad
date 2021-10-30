@@ -1,6 +1,8 @@
+@if(Auth::user()->hasRole('admin'))
 <div class="mb-3">
     <button class="btn btn-primary" onclick="newSchedule()">Tambah Jadwal</button>
 </div>
+@endif
 
 @php
    $colsOne = [
@@ -47,12 +49,14 @@
             @foreach($colsOne['Senin'] as $senin)
             <div class="sch-container">
                 <div class="sch-left">
+                    @if(Auth::user()->hasRole('admin'))
                     <button class="btn btn-xs" onclick="destroy('{{ $senin['id'] }}')">
                         <i class="fas fa-times" style="color:red"></i>
                     </button>
                     <button class="btn btn-xs" onclick="edit('{{ $senin['id'] }}')">
                         <i class="fas fa-edit" style="color:blue"></i>
                     </button>
+                    @endif
                     {{ $senin['subject'].' ('.$senin['teacher'].')' }}
                 </div>
 
@@ -67,12 +71,14 @@
             @foreach($colsOne['Selasa'] as $selasa)
             <div class="sch-container">
                 <div class="sch-left">
+                    @if(Auth::user()->hasRole('admin'))
                     <button class="btn btn-xs" onclick="destroy('{{ $selasa['id'] }}')">
                         <i class="fas fa-times" style="color:red"></i>
                     </button>
                     <button class="btn btn-xs" onclick="edit('{{ $selasa['id'] }}')">
                         <i class="fas fa-edit" style="color:blue"></i>
                     </button>
+                    @endif
                     {{ $selasa['subject'].' ('.$selasa['teacher'].')' }}
                 </div>
 

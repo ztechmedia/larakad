@@ -118,7 +118,7 @@
                         </li>
 
                         <li class="nav-header">MASTER DATA</li>
-
+                        @if(Auth::user()->hasRole('admin'))
                         <li class="nav-item {{ openMenu($menu, 'users') }}">
                             <a class="nav-link {{ setMenu($menu, 'users') }}">
                                 <i class="nav-icon fas fa-user"></i>
@@ -155,6 +155,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
                         <li class="nav-item">
                             <a href="{{ route('teachers.index') }}" class="nav-link {{ setMenu($menu, 'teacher') }}">
@@ -173,7 +174,7 @@
                                 </p>
                             </a>
                         </li>
-
+                        
                         <li class="nav-item {{ openMenu($menu, 'levels') }}">
                             <a class="nav-link {{ setMenu($menu, 'levels') }}">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
@@ -182,6 +183,8 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+
+                            @if(Auth::user()->hasRole('admin'))
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('levels.index') }}" class="nav-link {{ isset($submenu) ? setMenu($submenu, 'level') : null }}" class="nav-link">
@@ -190,7 +193,8 @@
                                     </a>
                                 </li>
                             </ul>
-
+                            @endif
+                            
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('classes.index') }}" class="nav-link {{ isset($submenu) ? setMenu($submenu, 'class') : null }}" class="nav-link">

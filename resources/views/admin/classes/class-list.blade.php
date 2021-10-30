@@ -1,7 +1,9 @@
 <div class="row">
+    @if(Auth::user()->hasRole('admin'))
     <div class="col-12">
         <a class="btn btn-primary mb-2" onclick="add()">Tambah Kelas</a>
     </div>
+    @endif
 
     @foreach($lists as $key => $list)
     <div class="col-12">
@@ -18,8 +20,10 @@
                     <li class="nav-item">
                       <a class="nav-link text-black">
                         {{ "Kelas ".$key."-".$class['class'] }} 
+                        @if(Auth::user()->hasRole('admin'))
                         <span onclick="edit('{{ $class['id'] }}')" class="float-right badge bg-info ml-1"><i class="fas fa-edit"></i></span>
                         <span onclick="destroy('{{ $class['id'] }}')" class="float-right badge bg-danger"><i class="fas fa-trash"></i></span>
+                        @endif
                       </a>
                     </li>
                     @endforeach

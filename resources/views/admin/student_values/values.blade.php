@@ -34,15 +34,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="level_id">Kelas</label>
+                                    <label for="class_id">Kelas</label>
                                     {{ Form::select('class_id', 
                                         ['' => '- Pilih Kelas -'], 
                                         null, 
-                                        ['id' => 'class_id', 'class' => 'form-control', 'onchange' => 'loadSchedule($(this).val())']) }}
+                                        ['id' => 'class_id', 'class' => 'form-control', 'onchange' => 'loadStudent($(this).val())']) }}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="level_id">Tahun Ajaran</label>
+                                    <label for="year">Tahun Ajaran</label>
                                     <select class="form-control" id="year" name="year">
                                         @php
                                         for ($i=2018; $i <= date('Y'); $i++) { $y=$i.'-'.($i + 1);
@@ -50,6 +50,15 @@
                                         @endphp 
                                     </select> 
                                 </div> 
+
+                                <div class="form-group">
+                                    <label for="semester">Semester</label>
+                                    <select class="form-control" id="semester" name="semester">
+                                       <option value="SM1">Semester 1</option>
+                                       <option value="SM2">Semester 2</option>
+                                    </select> 
+                                </div> 
+
                             </div>
                         </div>
                     </div>
@@ -59,11 +68,20 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="class-list">
+                        <div class="student-list">
                             Silahkan pilih Kelas yang tersedia
                         </div>
                     </div>
 
+                    <div id="input-values-form" style="display:none">
+                        <div class="card-header">
+                            <h3 class="card-title" id="card-title-input-values"></h3>
+                        </div>
+    
+                        <div class="card-body">
+                            <div class="input-values"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,8 +98,10 @@
 <script src="{{ asset('js/form.js') }}"></script>
 
 <script>
-    let selectedLevel = null;
-    let selectedClass = null;
+    selectedLevel = null;
+    selectedClass = null;
+    selectedStudent = null;
+    studentName = null;
 
     function loadClass(level) {
         selectedLevel = level;
@@ -96,6 +116,40 @@
             }
         });
     }
+
+    function loadStudent(classId) {
+        let year = $("#year").val();
+        const url = `{{ url('admin/student_values/student_list/${classId}/${year}') }}`;
+        loadView(url, '.student-list');
+    }
+
+    function inputValues(studentId, classId, studentName) {
+        selectedStudent = studentId;
+        selectedClass = classId;
+        studentName = studentName;
+        let year = $("#year").val();
+        let semester = $("#semester").val();
+        const url = `{{ url('admin/student_values/input_values/${studentId}/${classId}/${year}/${semester}/input') }}`;
+        $("#input-values-form").show();
+        $("#card-title-input-values").html(`Input Nilai ${studentName}`);
+        loadView(url, '.input-values');
+    }
+
+    function detailValues(studentId, classId, studentName) {
+        let year = $("#year").val();
+        let semester = $("#semester").val();
+        const url = `{{ url('admin/student_values/input_values/${studentId}/${classId}/${year}/${semester}/detail') }}`;
+        customModal('modal-default', `Detail Nilai ${studentName}`, url);
+    }
+
+    function ajaxResponse(context, res) {
+        if(res.status == 'failed') {
+            swal('Ops', res.message, 'error');
+        } else {
+            swal("Sukses", res.message, "success");
+            inputValues(selectedStudent, selectedClass, studentName);
+        }
+    }
 </script>
 @endsection
 
@@ -103,6 +157,12 @@
 <style>
     .custom-table tr td{
         padding: 5px;
+    }
+
+    .student-list {
+        height: 300px;
+        overflow: auto;
+        overflow-y: scroll;
     }
 </style>
 @endsection
