@@ -7,7 +7,9 @@
     <div>
         <i class="fas fa-user bg-blue"></i>
         <div class="timeline-item">
+            @if(Auth::user()->hasRole('admin'))
             <span class="time"><i class="fas fa-times" onclick="removeStudent('{{ $student->id }}')"></i></span>
+            @endif
             <h3 class="timeline-header"><a>{{ $student->name }}</a></h3>
 
             <div class="timeline-body">

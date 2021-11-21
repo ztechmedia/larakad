@@ -25,13 +25,13 @@ class User extends Authenticatable
     ];
 
     //@punya banyak student
-    public function student(Type $var = null)
+    public function student()
     {
         return $this->hasMany(Student::class);
     }
 
     //@punya banyak teacher
-    public function teacher(Type $var = null)
+    public function teacher()
     {
         return $this->hasMany(Teacher::class);
     }

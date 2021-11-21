@@ -30,9 +30,9 @@
                     </div>
 
                     <div class="card-body">
-
+                        @if(Auth::user()->hasRole('admin'))
                         <a class="btn btn-primary mb-2" href="{{ $add }}">Tambah Murid</a>
-
+                        @endif
                         <table id="student" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

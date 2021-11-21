@@ -37,3 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('student_values/input_values/{student}/{class}/{year}/{semester}/{mode}', ['as' => 'student_values.input_values', 'uses' => 'StudentValuesController@inputValues']);
     Route::post('student_values/store', ['as' => 'student_values.store', 'uses' => 'StudentValuesController@storeValues']);
 });
+
+Route::get('s_values', ['as' => 's_values', 'uses' => 'StudentValuesController@sValues']);
+Route::get('s_values/class_list/{level}', ['as' => 's_values.class_list', 'uses' => 'StudentValuesController@sVClassList']);
+Route::get('s_values/detail_values/{student_id}/{class_id}/{semester}/{year}', ['as' => 's_values.detail_values', 'uses' => 'StudentValuesController@detailValues']);

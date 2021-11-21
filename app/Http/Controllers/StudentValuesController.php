@@ -7,6 +7,7 @@ use Batch;
 use App\Models\Subject;
 use App\Models\Schedule;
 use App\Models\Teacher;
+use App\Models\Level;
 use App\Models\ClassData;
 use App\Models\MappingClass;
 use App\Models\StudentValue;
@@ -95,5 +96,73 @@ class StudentValuesController extends Controller
         StudentValue::insert($insert);
         Batch::update(new StudentValue, $update, 'id');
         return response()->json(['status' => 'success', 'message' => 'Berhasil input nilai']);
+    }
+
+    public function sValues()
+    {
+        return view('student.student_values', ['menu' => 's_values']);
+    }
+
+    public function sVClassList($level)
+    {
+        $levels = Level::find($level)->with('classData')->first();
+        $classIds = [];
+        $className = [];
+        foreach ($levels->classData as $class) {
+            $classIds[] = $class->id;
+            $className[$class->id] = $class->name;
+        }
+        $studentId = Auth::user()->student()->first()->id;
+        $classes = StudentValue::select('class_id', 'semester', 'year')
+                    ->where('student_id', $studentId)
+                    ->whereIn('class_id', $classIds)
+                    ->groupBy('class_id', 'semester', 'year')
+                    ->orderBy('class_id')
+                    ->get();
+
+        $fixClass = [];
+        foreach ($classes as $key => $class) {
+            $fixClass[$className[$class->class_id]][$class->semester] = [
+                'year' => $class->year,
+                'class_id' => $class->class_id
+            ];
+        }
+        return view('student.class_list', ['classes' => $fixClass, 'student_id' => $studentId]);
+    }
+
+    public function detailValues($student_id, $class_id, $semester, $year)
+    {
+        $values = StudentValue::where('student_id', $student_id)
+                    ->where('class_id', $class_id)
+                    ->where('semester', $semester)
+                    ->where('year', $year)
+                    ->with('student')
+                    ->with('subject')
+                    ->with('classes')
+                    ->get();
+
+        $className = ClassData::find($class_id)->name;
+        $semester = null;
+        $year = null;
+        $fixValues = [];
+        foreach ($values as $key => $value) {
+            if(!$semester) {
+                $semester = $value->semester == 'SM1' ? 'Semester 1' : 'Semester 2';
+            }
+            if(!$year) {
+                $year = $value->year;
+            }
+
+            $fixValues[] = [
+                'subject' => $value->subject->name,
+                'value' => $value->value
+            ];
+        }
+        return view('student.detail_values', [
+            'className' => $className,
+            'semester' => $semester,
+            'year' => $year,
+            'values' => $fixValues
+        ]);
     }
 }

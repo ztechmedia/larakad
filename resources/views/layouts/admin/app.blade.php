@@ -107,7 +107,8 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column nav-compact" data-widget="treeview" role="menu"
                         data-accordion="false">
-
+                        
+                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('teacher'))
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link {{ setMenu($menu, 'home') }}">
                                 <i class="nav-icon fas fa-home"></i>
@@ -240,6 +241,16 @@
                                 </p>
                             </a>
                         </li>
+                        @else 
+                        <li class="nav-item">
+                            <a href="{{ route('s_values') }}" class="nav-link {{ setMenu($menu, 's_values') }}">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Nilai Saya
+                                </p>
+                            </a>
+                        </li>
+                        @endif
 
                         <li class="nav-item">
                             <a data-redirect="{{ route('login') }}" data-url="{{ route('logout') }}" class="nav-link btn-logout">
