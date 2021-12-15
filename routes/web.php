@@ -3,7 +3,7 @@
 Route::get('/logout', '/Auth/LoginController@logout');
 Auth::routes(['register' => false]);
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'StudentController@formRegister')->name('register');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('home', 'HomeController@index')->name('home');
@@ -15,6 +15,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('teachers', 'TeacherController', ['except' => ['show']]);
     Route::resource('students', 'StudentController', ['except' => ['show']]);
     Route::resource('levels', 'LevelController', ['except' => ['show']]);
+    Route::get('register', ['as' => 'register.index', 'uses' => 'StudentController@registerList']);
+    Route::get('register/confirm/{student}', ['as' => 'register.confirm', 'uses' => 'StudentController@confirm']);
     
     Route::resource('classes', 'ClassController', ['except' => ['show', 'create']]);
     Route::get('classes/class-list/{level}', ['as' => 'classes.list', 'uses' => 'ClassController@classList']);
@@ -41,3 +43,5 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('s_values', ['as' => 's_values', 'uses' => 'StudentValuesController@sValues']);
 Route::get('s_values/class_list/{level}', ['as' => 's_values.class_list', 'uses' => 'StudentValuesController@sVClassList']);
 Route::get('s_values/detail_values/{student_id}/{class_id}/{semester}/{year}', ['as' => 's_values.detail_values', 'uses' => 'StudentValuesController@detailValues']);
+Route::get('form/registrasi', ['as' => 'form.registrasi', 'uses' => 'StudentController@formRegister']);
+Route::post('form/registrasi_submit', ['as' => 'form.registrasi_submit', 'uses' => 'StudentController@formRegisterSubmit']);

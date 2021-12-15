@@ -20,7 +20,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $students = Student::select('id', 'nis', 'nisn', 'name', 'birth_place', 'birth_date', 'address');
+            $students = Student::select('id', 'nis', 'nisn', 'name', 'birth_place', 'birth_date', 'address')->where('register', 0);
             return Datatables::of($students)
                 ->addColumn('birth_date', function ($student) {
                     return $student->birth_place . ', ' . $student->birth_date;
@@ -167,5 +167,73 @@ class StudentController extends Controller
                 'level_id' => 'tingkatan sekolah',
             ]
         )->validate();
+    }
+
+    public function formRegister()
+    {
+        return view('admin.students.web.register');
+    }
+
+    public function formRegisterSubmit(Request $request)
+    {
+        $this->validator($request);
+
+        $role = Role::where("name", 'student')->first();
+        $dataUser = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt('12345678')
+        ];
+        $user = User::create($dataUser);
+        $user->attachRole($role);
+
+        $data = $request->except('email');
+        $data['birth_date'] = revDate($data['birth_date']);
+        $data['join_date'] = revDate($data['join_date']);
+        $data['user_id'] = $user->id;
+        $data['created_by'] = Auth::user()->name;
+        $data['register'] = 1;
+        $student = Student::create($data);
+
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => 'Murid berhasil disimpan',
+        ]);
+    }
+
+    public function registerList(Request $request)
+    {
+        if ($request->ajax()) {
+            $registers = Student::select('id', 'nis', 'nisn', 'name', 'birth_place', 'birth_date', 'address')->where('register', 1);
+            return Datatables::of($registers)
+                ->addColumn('birth_date', function ($register) {
+                    return $register->birth_place . ', ' . $register->birth_date;
+                })
+                ->addColumn('action', function ($register) {
+                    return view('datatables._action_register', [
+                        'confirm' => route('register.confirm', $register->id)
+                    ]);
+                })->make(true);
+        }
+
+        $data = [
+            'menu' => 'register',
+            'request' => route('register.index'),
+        ];
+        return view('admin.register.register', $data);
+    }
+
+    public function confirm(Request $request, $id)
+    {        
+        $data['register'] = 0;
+        $student = Student::find($id);
+        $student->update($data);
+
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'message' => 'Pendaftaran terkonfirmasi',
+        ]);
     }
 }

@@ -47,3 +47,12 @@ const reqDelete = (url, callback) => {
         error: err => callback(true, err)
     });
 };
+
+const reqAction = (url, callback) => {
+    $.ajax({
+        url: url,
+        type: "GET",
+        success: response => callback(null, response),
+        error: err => callback(true, err)
+    });
+};

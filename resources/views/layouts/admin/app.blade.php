@@ -118,6 +118,15 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('register.index') }}" class="nav-link {{ setMenu($menu, 'register') }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Pendaftaran Siswa Baru
+                                </p>
+                            </a>
+                        </li>
+
                         <li class="nav-header">MASTER DATA</li>
                         @if(Auth::user()->hasRole('admin'))
                         <li class="nav-item {{ openMenu($menu, 'users') }}">

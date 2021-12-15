@@ -85,3 +85,35 @@ $(document.body).on("click", ".ajax-delete", function(e) {
         }
     );
 });
+
+$(document.body).on("click", ".ajax-confirm", function(e) {
+    const el = $(this);
+    const url = el.data("url");
+    const message = el.data("message");
+
+    swal(
+        {
+            title: "Konfirmasi",
+            text: message,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Ya, Konfirmasi!",
+            closeOnConfirm: false
+        },
+        function() {
+            reqAction(url, (err, res) => {
+                if (res.status === "error") {
+                    swal("Error", res.message, "error");
+                } else {
+                    swal("Success", res.message, "success");
+                    swal.close();
+                    row = el.closest("tr");
+                    row.fadeOut(200, function() {
+                        el.remove();
+                    });
+                }
+            });
+        }
+    );
+});

@@ -38,6 +38,7 @@ class CreateStudentsTable extends Migration
             $table->string('father_job', 50);
             $table->string('mother_job', 50);
             $table->string('created_by', 30);
+            $table->integer('status', 10);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
